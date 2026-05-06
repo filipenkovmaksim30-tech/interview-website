@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <title>C# Senior собеседование</title>
+    <link rel="stylesheet" href="../../style.css">
+  </head>
+  <body>
+  <nav class="nav-menu">
+  <a href="../../index.html">На главную</a>
+  <a href="../../index.html">Выбрать язык</a>
+  </nav>
+    <h1>Вопросы для C# Senior Backend разработчика</h1>
+    <main>
+      <ol class="qa-list">
+        <li>
+          <strong>Объясните устройство Roslyn (компилятор как сервис). Как использовать анализаторы и генераторы кода?</strong>
+          <button class="toggle-btn"> Показать ответ </button>
+          <p class="answer">
+            Roslyn — компилятор C# и VB.NET с открытым API. Позволяет анализировать код, строить синтаксические деревья, искать семантическую информацию.
+            Анализаторы — расширения, проверяющие код на соответствие правилам (стиль, безопасность) и генерирующие предупреждения или исправления (code fix).
+            Генераторы исходного кода (source generators) — генерируют код во время компиляции, уменьшая рефлексию (например, генерация сериализации/маппингов).
+            Широко используются в современных библиотеках (System.Text.Json, Minimal APIs).
+          </p>
+        </li>
+        <li>
+          <strong>Как устроен Kestrel и обработка HTTP-запроса в ASP.NET Core? Что такое Middleware pipeline?</strong>
+          <button class="toggle-btn"> Показать ответ </button>
+          <p class="answer">
+            Kestrel — встроенный высокопроизводительный веб-сервер на основе libuv/Socket.
+            Обработка: запрос попадает в Kestrel, передаётся в конвейер Middleware.
+            Middleware — компоненты, обрабатывающие запрос по цепочке (логирование, авторизация, маршрутизация).
+            Каждый Middleware вызывает следующий и может изменить ответ. Порядок регистрации важен.
+            После Middleware запрос доходит до Endpoint (MVC контроллер или Minimal API).
+          </p>
+        </li>
+        <li>
+          <strong>Какие механизмы для реализации фоновых задач в ASP.NET Core вы знаете? Сравните IHostedService, BackgroundService и очереди сообщений.</strong>
+          <button class="toggle-btn"> Показать ответ </button>
+          <p class="answer">
+            IHostedService / BackgroundService — абстракции для запуска длительных фоновых операций в том же процессе. Подходят для лёгких периодических задач (очистка, синхронизация).
+            Для масштабируемой фоновой обработки используют внешние очереди сообщений (RabbitMQ, Azure Service Bus) и воркеры (Worker Service).
+            Это позволяет вынести нагрузку, обеспечить устойчивость к перезапускам и балансировку.
+          </p>
+        </li>
+        <li>
+          <strong>Расскажите о стратегиях кэширования в высоконагруженных .NET приложениях. Как использовать In-Memory Cache, Distributed Cache и Output Cache?</strong>
+          <button class="toggle-btn"> Показать ответ </button>
+          <p class="answer">
+            In-Memory Cache (IMemoryCache) — хранит данные в памяти процесса, быстрый, но не подходит для фермы серверов.
+            Distributed Cache (IDistributedCache) — для shared кэша (Redis, SQL Server), медленнее, но синхронизирован между экземплярами.
+            Output Cache — кэширует HTTP-ответы целиком (Response Caching). Важно учитывать инвалидацию, время жизни и стратегии обновления (cache-aside, refresh-ahead).
+            Также полезны библиотеки третьих сторон (CacheManager, EasyCaching).
+          </p>
+        </li>
+        <li>
+          <strong>Как обеспечить потокобезопасность и минимизировать блокировки в многопоточном серверном приложении на C#? Опишите lock, SemaphoreSlim, Channel.</strong>
+          <button class="toggle-btn"> Показать ответ </button>
+          <p class="answer">
+            Потокобезопасность достигается синхронизацией доступа к разделяемым данным.
+            <code>lock</code> (Monitor) — простой мьютекс, блокирует выполнение другими потоками. Может приводить к deadlock при неправильном порядке вложенных блокировок.
+            <code>SemaphoreSlim</code> — ограничивает параллелизм (пул заданий). <code>Channel</code> (System.Threading.Channels) — асинхронная очередь с поддержкой BoundedCapacity и backpressure.
+            Для снижения блокировок используют lock-free структуры (ConcurrentDictionary, Interlocked), стараются проектировать асинхронное взаимодействие через Task и dataflow.
+          </p>
+        </li>
+      </ol>
+      <p><a href="../../index.html">Вернуться к выбору вакансий</a></p>
+    </main>
+    <script src="../../script.js"></script>
+  </body>
+</html>
